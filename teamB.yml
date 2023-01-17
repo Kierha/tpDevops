@@ -1,0 +1,40 @@
+- name: Install Apache
+  hosts: webMember
+  become: true
+  tasks:
+  - name : Créer un utilisateur
+    user :
+      name: webMember
+      shell: /bin/bash
+      password: password: $6$rounds=656000$T6T8R6JZz6L2o.Ux$dX8glY/N0/4J4v4/4J4v4/4J4v4/4J4v4/4J4v4/4J4v4/4J4v4/4J4v4/4J4v4/4J4v4/4J4v4/4J4v4/4J4v4/4J4v4/4J4v4
+    update_password: always
+  - name: Install Apache
+    apt:
+      name: apache2
+      state: present
+  - name: Create system devops
+      user:
+        name: webMember
+        state: present
+        home: /var/www/
+        shell: /bin/bash
+    - name: Create home directory
+      file:
+        path: /var/www/
+        state: directory
+        owner: webMember
+        group: devop
+        mode: 0755
+    - name: Copy Apache configuration file
+      template:
+        src: apache.conf.j2
+        dest: /var/www/apache2.conf
+        owner: webMember
+        group: devop
+        mode: 0644
+    - name: Start and enable Apache service
+      service:
+        name: apache2
+        state: started
+        enabled: true
+
