@@ -1,0 +1,19 @@
+---
+- name: Configure Wordpress
+  shell:
+  mv /var/www/html/wordpress/* /var/www/html/
+  chown -R www-data:www-data /var/www/html/
+  chmod -R 755 /var/www/html/
+
+- name: Configure Wordpress with MySQL
+  vars:
+    mysql_root_password: root_password
+    mysql_user: root
+    mysql_password: root
+    mysql_database: wordpress
+    mysql_host: 192.168.56.3
+  shell:
+  echo "define('DB_NAME', '{{ mysql_database }}');
+  define('DB_USER', '{{ mysql_user }}');
+  define('DB_PASSWORD', '{{ mysql_password }}');
+  define('DB_HOST', '{{ mysql_host }}');" >> /etc/wordpress/config-localhost.php

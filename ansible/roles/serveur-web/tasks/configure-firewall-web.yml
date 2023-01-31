@@ -1,0 +1,15 @@
+---
+- name: Autoriser HTTP, HTTP S, SSH connexion
+ufw:
+  rule: allow
+  port: 
+    - 80/tcp
+    - 443/tcp
+    - 22/tcp
+  state: present
+
+- name: Limiter HTTP connexion
+ufw:
+  rule: limit
+  service: 80/tcp
+  limite: 10/sec
