@@ -1,0 +1,24 @@
+---
+- name: Vérifier que le groupe 'devops' existe
+  group:
+    name: devops
+    state: present
+
+- name: Créer l'utilisateur 'web'
+  user:
+    name: web
+    shell: /bin/bash
+    password: $6$rounds=656000$yPlQTzTdY0l9XvJf$ZWBMJG6c1luIg.R6lnRJL.b0gPfcrzQ9vOmbq0xM7DdAfO96C8o2QV0F48Bzms1t4hbLZO5tXv0l0JefDhSgj0
+    state: present
+
+- name: Assigner 'web' au groupe 'devops'
+  user:
+    name: web
+    groups: devops
+    append: yes
+
+- name: Donner les privilèges superutilisateur au groupe devops
+  lineinfile:
+    path: /etc/sudoers
+    line: '%devops ALL=(ALL) NOPASSWD:ALL'
+    validate: 'visudo -cf %s'

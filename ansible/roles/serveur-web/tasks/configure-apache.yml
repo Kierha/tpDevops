@@ -1,0 +1,5 @@
+---
+- name: Copy Apache configuration file
+  template:
+    src: ../../templates/default.conf.j2
+    dest: /etc/apache2/sites-available/000-default.conf

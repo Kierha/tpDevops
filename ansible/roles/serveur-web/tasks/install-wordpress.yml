@@ -1,0 +1,9 @@
+---
+- name: Télécharger le dernier fichier WordPress
+  get_url: url=https://wordpress.org/latest.tar.gz dest=/var/www/html/
+
+- name: Décompresser le fichier WordPress
+  unarchive: src=/var/www/html/latest.tar.gz dest=/var/www/html/
+
+- name: Configurer WordPress pour se connecter à la base de données
+  template: src=wp-config.php.j2 dest=/var/www/html/wordpress/wp-config.php
