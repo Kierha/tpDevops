@@ -1,7 +1,0 @@
-- name: Provisier VM
-  hosts: web-servers
-  become: yes
-  become_method: sudo
-  remote_user: ubuntu
-  tasks:
-    -  import_tasks: dhcp.yml
